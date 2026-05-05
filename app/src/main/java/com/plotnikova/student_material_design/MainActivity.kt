@@ -67,13 +67,19 @@ fun StudentInformation(
 
 @Composable
 fun StudentItem(student: Student) {
-    Row(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(dimensionResource(R.dimen.padding_medium))
+            .padding(dimensionResource(R.dimen.padding_small))
     ) {
-        StudentIcon(student.imageResourceId)
-        StudentInformation(student.name, student.age)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(dimensionResource(R.dimen.padding_medium))
+        ) {
+            StudentIcon(student.imageResourceId)
+            StudentInformation(student.name, student.age)
+        }
     }
 }
 
