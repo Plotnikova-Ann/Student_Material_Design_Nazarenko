@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -87,11 +88,45 @@ fun StudentItem(student: Student) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun StudentTopAppBar() {
+    CenterAlignedTopAppBar(
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.ic_student_logo),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(dimensionResource(R.dimen.image_size))
+                        .padding(dimensionResource(R.dimen.padding_small))
+                )
+                Text(
+                    text = stringResource(R.string.app_name),
+                    style = MaterialTheme.typography.displayLarge
+                )
+            }
+        },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        )
+    )
+}
+
 @Composable
 fun StudentApp() {
-    LazyColumn {
-        items(students) { student ->
-            StudentItem(student)
+    Scaffold(
+        topBar = { StudentTopAppBar() }
+    ) { paddingValues ->
+        LazyColumn(
+            contentPadding = paddingValues
+        ) {
+            items(students) { student ->
+                StudentItem(student)
+            }
         }
     }
 }
